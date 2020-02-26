@@ -10,11 +10,11 @@ a.out "9...7...." "2...9..53" ".6..124.." "84...1.9." "5.....8.." ".31..4..." ".
 
 void    ft_putchar(char c);
 void    ft_putstr(char *str);
-int no_on_line (int value, char grille[9][9], int column);
-int no_on_column (int value, char grille[9][9], int line);
-int no_on_block (int value, char grille[9][9], int column, int line);
+int no_on_line (int value, char rack[9][9], int column);
+int no_on_column (int value, char rack[9][9], int line);
+int no_on_block (int value, char rack[9][9], int column, int line);
 
-void affichage (char grille[9][9])
+void display (char rack[9][9])
 {
     int column;
     int line;
@@ -25,7 +25,7 @@ void affichage (char grille[9][9])
         line = 0;
         while ( line < 9 )
         {
-            ft_putchar(grille[column][line]);
+            ft_putchar(rack[column][line]);
             
             line++;
             if (line < 9)
@@ -41,7 +41,7 @@ void affichage (char grille[9][9])
     }
 }
 
-int ft_isGood (char grille[9][9], int position)
+int ft_isGood (char rack[9][9], int position)
 {
     int column;
     int line;
@@ -51,26 +51,26 @@ int ft_isGood (char grille[9][9], int position)
         return ( 1 );
     column = position/9;
     line = position%9;
-    if (grille[column][line] != '.')
-        return ( ft_isGood(grille, position+1) );
+    if (rack[column][line] != '.')
+        return ( ft_isGood(rack, position+1) );
     value = '1';
     while ( value <= '9' )
     {
-        if(no_on_line(value,grille,column) && 
-            no_on_column(value,grille,line) &&
-                no_on_block(value,grille,column,line))
+        if(no_on_line(value,rack,column) && 
+            no_on_column(value,rack,line) &&
+                no_on_block(value,rack,column,line))
         {
-            grille[column][line] = value;
-            if ( ft_isGood (grille, position+1) )
+            rack[column][line] = value;
+            if ( ft_isGood (rack, position+1) )
                 return 1;
         }
         value++;
     }
-    grille[column][line] = '.';
+    rack[column][line] = '.';
     return 0;
 }
 
-int make_tableau(char grid[9][9], char **argv)
+int make_tableau(char rack[9][9], char **argv)
 {
     int column;
     int line;
@@ -83,10 +83,10 @@ int make_tableau(char grid[9][9], char **argv)
         {
             if (argv[column + 1][line] > '0' && argv[column + 1][line] <= '9' )
             {
-                grid[column][line] = argv[column + 1][line] ;
+                rack[column][line] = argv[column + 1][line] ;
             }
             else if (argv[column + 1][line] == '.')
-                grid[column][line] = '.';
+                rack[column][line] = '.';
             else
             {
                 ft_putstr("Error\n");
@@ -107,13 +107,13 @@ int main (int argc, char *argv[])
         ft_putstr("Error");
         return 1;
     }
-    char grid[9][9] ;
+    char rack[9][9] ;
 
-    if (make_tableau(grid, argv))
+    if (make_tableau(rack, argv))
         return 1;
 
-    ft_isGood(grid,0);
-    affichage(grid);
+    ft_isGood(rack,0);
+    display(rack);
     return 0;
 }
 

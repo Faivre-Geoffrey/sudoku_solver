@@ -1,31 +1,31 @@
-int no_on_line (char value, char grille[9][9], int column)
+int no_on_line (char value, char rack[9][9], int column)
 {
     int line;
     line = 0;
     while (line < 9)
     {
-        if (grille[column][line] == value)
+        if (rack[column][line] == value)
             return 0;
         line++;
     }
     return 1;
 }
 
-int no_on_column (char value, char grille[9][9], int line)
+int no_on_column (char value, char rack[9][9], int line)
 {
     int column;
 
     column = 0;
     while (column < 9)
     {
-        if (grille[column][line] == value)
+        if (rack[column][line] == value)
             return 0;
         column++;
     }
     return 1;
 }
 
-int no_on_block (char value, char grille[9][9], int column, int line)
+int no_on_block (char value, char rack[9][9], int column, int line)
 {
     int i; //column
     int j; //line
@@ -39,7 +39,7 @@ int no_on_block (char value, char grille[9][9], int column, int line)
         line = j;
         while ( line < j+3)
         {
-            if (grille[column][line] == value)
+            if (rack[column][line] == value)
                 return 0;
             line++;
         }
